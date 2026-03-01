@@ -1,0 +1,155 @@
+﻿@model List<QueryReport>
+
+@{
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
+}
+
+<style>
+    .table-container {
+        width: 90%;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .reports-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .reports-table thead {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .reports-table th {
+            padding: 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .reports-table td {
+            padding: 14px;
+            border-bottom: 1px solid #eaeaea;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .reports-table tbody tr:hover {
+            background-color: #f5f7fa;
+            transition: 0.2s ease-in-out;
+        }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn-open {
+        display: inline-block;
+        padding: 6px 14px;
+        background-color: #3498db;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 13px;
+        transition: 0.2s ease-in-out;
+    }
+
+        .btn-open:hover {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+        }
+
+    .reports-header {
+        width: 90%;
+        margin: 30px auto 10px auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .reports-header h2 {
+            margin: 0;
+        }
+
+    .btn-create {
+        padding: 8px 16px;
+        background-color: #2ecc71;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: 0.2s ease-in-out;
+    }
+
+        .btn-create:hover {
+            background-color: #27ae60;
+            transform: translateY(-1px);
+        }
+
+    .btn-logout {
+        padding: 8px 16px;
+        background-color: #e74c3c;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+</style>
+
+<div class="reports-header">
+    <h2>Lista de Reportes</h2>
+
+    @if (Context.Session.GetString("IsAdmin") == "True")
+    {
+        <a asp-controller="Reports"
+           asp-action="Create"
+           class="btn-create">
+            + Nuevo Reporte
+        </a>
+    }
+    <a asp-controller="Auth"
+       asp-action="Logout"
+       class="btn-logout">
+        Cerrar sesión
+    </a>
+</div>
+
+<div class="table-container">
+    <table class="reports-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Base de Datos</th>
+                <th class="text-center">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model)
+            {
+                <tr>
+                    <td>@report.Name</td>
+                    <td>@report.ConnectionString</td>
+                    <td class="text-center">
+                        <a asp-controller="Reports"
+                           asp-action="Open"
+                           asp-route-id="@report.ReportId"
+                           class="btn-open">
+                            Abrir
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
