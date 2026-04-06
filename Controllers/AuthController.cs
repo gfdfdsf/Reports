@@ -23,6 +23,7 @@ namespace Proyecto_Integrador_DevOps.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
+            //test de ci
             if (!ModelState.IsValid)
                 return View(model);
 
