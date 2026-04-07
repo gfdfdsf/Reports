@@ -34,3 +34,11 @@ jobs:
 
     - name: Push image
       run: docker push sebasperez581/proyecto-integrador-devops:${{ github.sha }}
+
+    - name: Deploy with Helm
+      run: |
+        helm upgrade --install proyecto-integrador-devops ./proyecto-integrador-devops \
+          --set image.tag=${{ github.sha }}
+
+    - name: Push image
+      run: docker push sebasperez581/proyecto-integrador-devops:${{ github.sha }}
