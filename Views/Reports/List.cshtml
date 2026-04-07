@@ -105,6 +105,26 @@
         .btn-logout:hover {
             background-color: #c0392b;
         }
+
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        margin-left: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-delete:active {
+            transform: scale(0.97);
+        }
 </style>
 
 <div class="reports-header">
@@ -147,6 +167,19 @@
                            class="btn-open">
                             Abrir
                         </a>
+                        @if (Context.Session.GetString("IsAdmin") == "True")
+                        {
+                            <form asp-controller="Reports"
+                                  asp-action="DeleteReport"
+                                  asp-route-id="@report.ReportId"
+                                  method="post"
+                                  style="display:inline;">
+
+                                <button type="submit" class="btn-delete">
+                                    Eliminar
+                                </button>
+                            </form>
+                        }
                     </td>
                 </tr>
             }

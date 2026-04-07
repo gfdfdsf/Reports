@@ -97,5 +97,18 @@ namespace Proyecto_Integrador_DevOps.Controllers
 
             return RedirectToAction("List");
         }
+
+        [HttpPost]
+        public IActionResult DeleteReport(int id)
+        {
+            if (HttpContext.Session.GetString("IsAdmin") != "True")
+            {
+                return Unauthorized();
+            }
+
+            _queryService.DeleteReport(id);
+
+            return RedirectToAction("List");
+        }
     }
 }

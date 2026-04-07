@@ -214,6 +214,23 @@ namespace Proyecto_Integrador_DevOps.Infrastructure
             }
         }
 
+        public void DeleteReport(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string query = @"DELETE FROM Reports WHERE ReportId = @Id";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private QueryReport MapReport(SqlDataReader reader)
         {
             return new QueryReport

@@ -64,6 +64,11 @@ namespace Proyecto_Integrador_DevOps.Service
             _queryDao.UpdateReport(report);
         }
 
+        public void DeleteReport(int id)
+        {
+            _queryDao.DeleteReport(id);
+        }
+
         public List<string> ValidateQueryRequest(QueryReport report)
         {
             var errors = new List<string>();
