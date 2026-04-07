@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -11,11 +11,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
 
     - name: Restore
       run: dotnet restore
@@ -35,10 +30,11 @@ jobs:
     - name: Push image
       run: docker push sebasperez581/proyecto-integrador-devops:${{ github.sha }}
 
+    # CD AUTOMÁTICO CON HELM
     - name: Deploy with Helm
       run: |
         helm upgrade --install proyecto-integrador-devops ./proyecto-integrador-devops \
           --set image.tag=${{ github.sha }}
 
-    - name: Push image
-      run: docker push sebasperez581/proyecto-integrador-devops:${{ github.sha }}
+    - name: Verify rollout
+      run: kubectl rollout status deployment/proyecto-integrador-devops
