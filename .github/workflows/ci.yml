@@ -35,9 +35,7 @@ jobs:
 
     # CD AUTOMÁTICO CON HELM
     - name: Deploy with Helm
-      run: |
-        helm upgrade --install proyecto-integrador-devops ./proyecto-integrador-devops \
-          --set image.tag=${{ github.sha }}
+      run: helm upgrade --install proyecto-integrador-devops ./proyecto-integrador-devops --set image.tag=${{ github.sha }}
 
     - name: Verify rollout
       run: kubectl rollout status deployment/proyecto-integrador-devops
